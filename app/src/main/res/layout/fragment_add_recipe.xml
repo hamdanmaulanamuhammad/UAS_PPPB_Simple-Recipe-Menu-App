@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@drawable/background_login_register"
+    android:padding="16dp">
+
+    <!-- ImageView untuk Gambar Resep -->
+    <ImageView
+        android:id="@+id/imageViewRecipe"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:contentDescription="Recipe Image"
+        android:background="@drawable/placeholder_image_recipe"
+        android:layout_marginBottom="20dp"/>
+
+    <!-- EditText untuk URL Gambar -->
+    <EditText
+        android:id="@+id/editTextImageUrl"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:background="@drawable/edit_text"
+        android:fontFamily="@font/urbanist"
+        android:textSize="18sp"
+        android:layout_marginBottom="20sp"
+        android:hint="Image URL" />
+
+    <!-- EditText untuk Nama Resep -->
+    <EditText
+        android:id="@+id/editTextRecipeName"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:background="@drawable/edit_text"
+        android:fontFamily="@font/urbanist"
+        android:textSize="18sp"
+        android:layout_marginBottom="20dp"
+        android:hint="Recipe Name" />
+
+    <!-- EditText untuk Jumlah Kalori -->
+    <EditText
+        android:id="@+id/editTextCalories"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:background="@drawable/edit_text"
+        android:fontFamily="@font/urbanist"
+        android:textSize="18sp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dp"
+        android:hint="Calories" />
+
+    <!-- EditText untuk Estimasi Lama Memasak -->
+    <EditText
+        android:id="@+id/editTextDuration"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:background="@drawable/edit_text"
+        android:fontFamily="@font/urbanist"
+        android:textSize="18sp" android:layout_gravity="center"
+        android:layout_marginBottom="30dp"
+        android:hint="Duration" />
+
+    <!-- Button untuk Menambahkan Resep -->
+    <Button
+        android:id="@+id/buttonAddRecipe"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button"
+        app:backgroundTint="@null"
+        android:layout_gravity="center"
+        android:text="Add Recipe" />
+</LinearLayout>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="form_border">#E8ECF4</color>
+    <color name="form_text">#8391A1</color>
+    <color name="form_fill">#F7F8F9</color>
+    <color name="btn_fill">#042628</color>
+    <color name="tab_layout">#3DA0A7</color>
+
+</resources>

@@ -1,0 +1,21 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    <item
+        android:id="@+id/nav_home"
+        android:title="Home"
+        android:icon="@drawable/ic_home"
+        />
+    <item
+        android:id="@+id/nav_saved_recipes"
+        android:title="Saved Recipes"
+        android:icon="@drawable/ic_saved"/>
+    <item
+        android:id="@+id/nav_add_recipes"
+        android:title="Add Recipes"
+        android:icon="@drawable/ic_add"/>
+    <item
+        android:id="@+id/nav_profile"
+        android:title="Profile"
+        android:icon="@drawable/ic_profile"/>
+</menu>
