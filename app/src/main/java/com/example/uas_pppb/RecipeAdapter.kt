@@ -9,6 +9,10 @@ import com.example.uas_pppb.databinding.ItemRecipeBinding
 import com.example.uas_pppb.model.Recipe
 import com.bumptech.glide.Glide
 import com.example.uas_pppb.R
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 typealias OnClickRecipe = (Recipe) -> Unit
 
@@ -42,7 +46,7 @@ class RecipeAdapter(
 
                 // Handle save button click
                 buttonFavorite.setOnClickListener {
-                    Thread {
+                    CoroutineScope(Dispatchers.IO).launch {
                         val dao = database.recipeDao()
                         val existingRecipe = dao.getRecipeByName(recipe.name)
 
@@ -57,7 +61,12 @@ class RecipeAdapter(
                             )
                             dao.insert(recipeEntity) // Simpan resep baru
                         }
-                    }.start()
+
+                        // Update UI on the main thread
+                        withContext(Dispatchers.Main) {
+                            // Update button state if needed
+                        }
+                    }
                 }
 
                 // Handle item click

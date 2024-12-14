@@ -63,8 +63,8 @@ class AddRecipeFragment : Fragment() {
             return
         }
 
-        // Buat objek Recipe
-        val recipe = Recipe(recipeName, imageUrl, calories, duration)
+        // Buat objek Recipe tanpa id
+        val recipe = Recipe(name = recipeName, imageUrl = imageUrl, calories = calories, cookingTime = duration)
 
         // Kirim data ke API
         Client.getInstance().addRecipe(recipe).enqueue(object : Callback<Void> {

@@ -8,11 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.uas_pppb.database.RecipeRoomDatabase
 import com.example.uas_pppb.databinding.FragmentHomeBinding
 import com.example.uas_pppb.model.Recipe
 import com.example.uas_pppb.network.Client
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -72,57 +74,28 @@ class HomeFragment : Fragment() {
 
     private fun fetchRecipes() {
         val api = Client.getInstance()
-        api.getRecipes().enqueue(object : Callback<List<Map<String, Any>>> {
-            override fun onResponse(call: Call<List<Map<String, Any>>>, response: Response<List<Map<String, Any>>>) {
+        api.getRecipes().enqueue(object : Callback<List<Recipe>> {
+            override fun onResponse(call: Call<List<Recipe>>, response: Response<List<Recipe>>) {
                 if (response.isSuccessful) {
-                    val recipes = mutableListOf<Recipe>()
-
-                    response.body()?.forEach { recipeMap ->
-                        // Mengambil setiap entri dalam map
-                        recipeMap.forEach { (key, value) ->
-                            if (key != "_id" && value is Map<*, *>) {
-                                try {
-                                    val recipe = parseRecipe(value)
-                                    recipe?.let { recipes.add(it) }
-                                } catch (e: Exception) {
-                                    Log.e("HomeFragment", "Error parsing recipe: ${e.message}")
-                                }
-                            }
-                        }
+                    response.body()?.let { recipes ->
+                        // Update adapter dengan daftar resep yang diambil
+                        recipeList.clear()
+                        recipeList.addAll(recipes)
+                        recipeAdapter.notifyDataSetChanged()
+                    } ?: run {
+                        Toast.makeText(requireContext(), "No recipes found", Toast.LENGTH_SHORT).show()
                     }
-
-                    Log.d("HomeFragment", "Recipes fetched: ${recipes.size}")
-
-                    // Update adapter dengan daftar resep yang diambil
-                    recipeList.clear()
-                    recipeList.addAll(recipes)
-                    recipeAdapter.notifyDataSetChanged()
-
                 } else {
                     Toast.makeText(requireContext(), "Failed to load recipes", Toast.LENGTH_SHORT).show()
                     Log.e("HomeFragment", "Error: ${response.errorBody()?.string()}")
                 }
             }
 
-            override fun onFailure(call: Call<List<Map<String, Any>>>, t: Throwable) {
+            override fun onFailure(call: Call<List<Recipe>>, t: Throwable) {
                 Log.e("HomeFragment", "Error fetching recipes: ${t.message}")
                 Toast.makeText(requireContext(), "Error fetching recipes: ${t.message}", Toast.LENGTH_SHORT).show()
             }
         })
-    }
-
-    private fun parseRecipe(map: Map<*, *>): Recipe? {
-        return try {
-            Recipe(
-                name = map["name"] as? String ?: "",
-                imageUrl = map["imageUrl"] as? String ?: "",
-                calories = (map["calories"] as? Number)?.toInt() ?: 0,
-                cookingTime = map["cookingTime"] as? String ?: ""
-            )
-        } catch (e: Exception) {
-            Log.e("HomeFragment", "Error parsing recipe data: ${e.message}")
-            null
-        }
     }
 
     override fun onDestroyView() {
