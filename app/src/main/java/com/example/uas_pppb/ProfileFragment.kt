@@ -1,6 +1,7 @@
 package com.example.uas_pppb.ui
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,6 +10,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.uas_pppb.ActivityAuth
+import com.example.uas_pppb.PrefManager
 import com.example.uas_pppb.databinding.FragmentProfileBinding
 import com.example.uas_pppb.model.Recipe
 import com.example.uas_pppb.network.Client
@@ -20,7 +23,7 @@ class ProfileFragment : Fragment() {
 
     private lateinit var binding: FragmentProfileBinding
     private lateinit var recipeAdapter: ProfileRecipeAdapter
-    private val recipeList = mutableListOf<Recipe>() // Daftar resep
+    private val recipeList = mutableListOf<Recipe>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,13 +34,20 @@ class ProfileFragment : Fragment() {
         // Menampilkan sapaan pengguna
         val sharedPreferences = requireActivity().getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
         val name = sharedPreferences.getString("name", "User") ?: "User"
+        val email = sharedPreferences.getString("email", "Email") ?: "Email"
         binding.textViewName.text = name // Set username
+        binding.textViewEmail.text = email
 
         // Setup RecyclerView
         setupRecyclerView()
 
         // Mengambil data resep dari API
         fetchUserRecipes()
+
+        // Menangani klik tombol logout
+        binding.buttonLogout.setOnClickListener {
+            logout()
+        }
 
         return binding.root
     }
@@ -78,7 +88,7 @@ class ProfileFragment : Fragment() {
     }
 
     private fun deleteRecipe(recipe: Recipe) {
-        val recipeId = recipe._id ?: return // Jika id null, keluar dari fungsi
+        val recipeId = recipe._id ?: return
         Log.d("ProfileFragment", "Deleting recipe with id: $recipeId")
 
         val api = Client.getInstance()
@@ -102,8 +112,21 @@ class ProfileFragment : Fragment() {
         })
     }
 
+    private fun logout() {
+        // Mengatur status login ke false
+        val prefManager = PrefManager.getInstance(requireContext())
+        prefManager.saveLoginStatus(false)
+
+        // Kembali ke layar login
+        val intent = Intent(requireContext(), ActivityAuth::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        requireActivity().finish()
+    }
+
+
     override fun onDestroyView() {
         super.onDestroyView()
         // Membersihkan binding untuk mencegah kebocoran memori
     }
 }
+

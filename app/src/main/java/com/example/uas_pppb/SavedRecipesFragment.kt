@@ -70,6 +70,6 @@ class SavedRecipesFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        // Membersihkan binding untuk mencegah kebocoran memori
+
     }
 }

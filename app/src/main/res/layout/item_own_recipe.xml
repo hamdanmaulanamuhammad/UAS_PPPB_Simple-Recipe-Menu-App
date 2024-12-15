@@ -58,4 +58,5 @@
         android:background="?attr/selectableItemBackground"
         android:layout_gravity="center_vertical"
         android:layout_marginStart="16dp" />
+
 </LinearLayout>

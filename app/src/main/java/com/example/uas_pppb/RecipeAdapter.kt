@@ -19,7 +19,7 @@ typealias OnClickRecipe = (Recipe) -> Unit
 class RecipeAdapter(
     private val recipes: List<Recipe>,
     private val onItemClick: OnClickRecipe,
-    private val database: RecipeRoomDatabase // Database untuk akses DAO
+    private val database: RecipeRoomDatabase
 ) : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
 
     inner class RecipeViewHolder(private val binding: ItemRecipeBinding) :

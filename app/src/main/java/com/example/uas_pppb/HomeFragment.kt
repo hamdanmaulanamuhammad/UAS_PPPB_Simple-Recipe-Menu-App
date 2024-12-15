@@ -66,7 +66,7 @@ class HomeFragment : Fragment() {
     private fun setupRecyclerView() {
         binding.recyclerViewRecipes.layoutManager = GridLayoutManager(requireContext(), 2)
         recipeAdapter = RecipeAdapter(recipeList, { recipe ->
-            // Logika untuk menangani klik item resep
+            // toast saat klik item menu resep
             Toast.makeText(requireContext(), "Clicked: ${recipe.name}", Toast.LENGTH_SHORT).show()
         }, database) // Pass database to adapter
         binding.recyclerViewRecipes.adapter = recipeAdapter

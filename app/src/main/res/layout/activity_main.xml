@@ -18,4 +18,5 @@
         android:layout_height="wrap_content"
         android:background="@color/tab_layout"
         app:menu="@menu/bottom_icon_menu" />
+
 </LinearLayout>

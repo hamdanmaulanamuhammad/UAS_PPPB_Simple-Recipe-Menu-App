@@ -23,7 +23,7 @@ class PrefManager private constructor(context: Context) {
         private const val KEY_IS_LOGGED_IN = "isLoggedIn"
         private const val KEY_EMAIL = "email"
         private const val KEY_PASSWORD = "password"
-        private const val KEY_NAME = "name" // Kunci untuk username
+        private const val KEY_NAME = "name"
     }
 
     fun saveLoginStatus(isLoggedIn: Boolean) {

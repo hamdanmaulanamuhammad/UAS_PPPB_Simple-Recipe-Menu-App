@@ -10,19 +10,19 @@ object Client {
 
     // Membuat instance HttpLoggingInterceptor
     private val logging = HttpLoggingInterceptor().apply {
-        level = HttpLoggingInterceptor.Level.BODY // Atur level logging
+        level = HttpLoggingInterceptor.Level.BODY
     }
 
     // Membuat OkHttpClient dengan interceptor
     private val client = OkHttpClient.Builder()
-        .addInterceptor(logging) // Menambahkan interceptor ke OkHttpClient
+        .addInterceptor(logging)
         .build()
 
-    // Membuat instance Retrofit dengan OkHttpClient yang telah dikonfigurasi
+    // Membuat instance Retrofit dengan OkHttpClient
     private val retrofit: Retrofit by lazy {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
-            .client(client) // Menggunakan OkHttpClient yang telah dikonfigurasi
+            .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
